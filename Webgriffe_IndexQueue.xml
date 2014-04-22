@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Webgriffe_IndexQueue>
+            <active>true</active>
+            <codePool>community</codePool>
+        </Webgriffe_IndexQueue>
+    </modules>
+</config>

@@ -1,0 +1,2 @@
+src                                     app/code/community/Webgriffe/IndexQueue
+Webgriffe_IndexQueue.xml                app/etc/modules/Webgriffe_IndexQueue.xml

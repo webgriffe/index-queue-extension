@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Webgriffe_IndexQueue>
+            <version>1.0.0</version>
+        </Webgriffe_IndexQueue>
+    </modules>
+    <global>
+        <models>
+            <wg_indexqueue>
+                <class>Webgriffe_IndexQueue_Model</class>
+                <resourceModel>wg_indexqueue_resource</resourceModel>
+            </wg_indexqueue>
+            <wg_indexqueue_resource>
+                <class>Webgriffe_IndexQueue_Model_Resource</class>
+            </wg_indexqueue_resource>
+        </models>
+        <blocks>
+            <wg_indexqueue>
+                <class>Webgriffe_IndexQueue_Block</class>
+            </wg_indexqueue>
+        </blocks>
+        <helpers>
+            <wg_indexqueue>
+                <class>Webgriffe_IndexQueue_Helper</class>
+            </wg_indexqueue>
+        </helpers>
+    </global>
+</config>
