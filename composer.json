@@ -1,0 +1,15 @@
+{
+    "name": "webgriffe/image-queue-extension",
+    "type": "magento-module",
+    "license":"OSL-3.0",
+    "description":"Magento extension that queues indexing operations.",
+    "authors":[
+        {
+            "name":"Webgriffe Srl",
+            "email":"info@webgriffe.com"
+        }
+    ],
+    "require": {
+        "magento-hackathon/magento-composer-installer": "*"
+    }
+}

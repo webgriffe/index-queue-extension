@@ -1,3 +1,5 @@
 /.idea/
 /magento/
 /.modman/
+/vendor/
+/composer.lock
