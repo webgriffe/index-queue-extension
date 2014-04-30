@@ -26,4 +26,11 @@
             </wg_indexqueue>
         </helpers>
     </global>
+    <phpunit>
+        <suite>
+            <modules>
+                <Webgriffe_IndexQueue />
+            </modules>
+        </suite>
+    </phpunit>
 </config>
