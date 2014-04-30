@@ -9,7 +9,19 @@
             "email":"info@webgriffe.com"
         }
     ],
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "http://packages.firegento.com"
+        }
+    ],
     "require": {
         "magento-hackathon/magento-composer-installer": "*"
+    },
+    "require-dev": {
+        "ivanchepurnyi/ecomdev_phpunit": "dev-dev"
+    },
+    "extra": {
+        "magento-root-dir": "magento"
     }
 }
