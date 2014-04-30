@@ -13,10 +13,15 @@
         {
             "type": "composer",
             "url": "http://packages.firegento.com"
+        },
+        {
+            "type": "vcs",
+            "url": "git@github.com:mmenozzi/magento-lilmuckers_queue.git"
         }
     ],
     "require": {
-        "magento-hackathon/magento-composer-installer": "*"
+        "magento-hackathon/magento-composer-installer": "*",
+        "lilmuckers/magento-lilmuckers_queue": "dev-composer-installable"
     },
     "require-dev": {
         "ivanchepurnyi/ecomdev_phpunit": "dev-dev"
