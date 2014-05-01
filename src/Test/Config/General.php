@@ -9,4 +9,9 @@ class Webgriffe_IndexQueue_Test_Config_General extends EcomDev_PHPUnit_Test_Case
     {
         $this->assertModuleIsActive();
     }
+
+    public function testThatIndexerIsRewritten()
+    {
+        $this->assertModelAlias('index/indexer', 'Webgriffe_IndexQueue_Model_Indexer');
+    }
 } 
