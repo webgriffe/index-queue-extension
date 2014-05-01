@@ -16,12 +16,12 @@
         },
         {
             "type": "vcs",
-            "url": "git@github.com:mmenozzi/magento-lilmuckers_queue.git"
+            "url": "git@github.com:lilmuckers/magento-lilmuckers_queue.git"
         }
     ],
     "require": {
         "magento-hackathon/magento-composer-installer": "*",
-        "lilmuckers/magento-lilmuckers_queue": "dev-composer-installable"
+        "lilmuckers/magento-lilmuckers_queue": "dev-master"
     },
     "require-dev": {
         "ivanchepurnyi/ecomdev_phpunit": "dev-dev"
