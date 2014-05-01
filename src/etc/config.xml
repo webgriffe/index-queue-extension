@@ -31,10 +31,17 @@
             </wg_indexqueue>
         </helpers>
     </global>
+    <default>
+        <system>
+            <index_queue>
+                <enabled>1</enabled>
+            </index_queue>
+        </system>
+    </default>
     <phpunit>
         <suite>
             <modules>
-                <Webgriffe_IndexQueue />
+                <Webgriffe_IndexQueue/>
             </modules>
         </suite>
     </phpunit>

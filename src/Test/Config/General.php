@@ -14,4 +14,9 @@ class Webgriffe_IndexQueue_Test_Config_General extends EcomDev_PHPUnit_Test_Case
     {
         $this->assertModelAlias('index/indexer', 'Webgriffe_IndexQueue_Model_Indexer');
     }
+
+    public function testThatEnabledConfigParameterIsDefinedAndIsSetToTrue()
+    {
+        $this->assertConfigNodeValue('default/system/index_queue/enabled', '1');
+    }
 } 
