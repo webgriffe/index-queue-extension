@@ -7,7 +7,9 @@ class Webgriffe_IndexQueue_Model_Indexer extends Mage_Index_Model_Indexer
 {
     public function processEntityAction(Varien_Object $entity, $entityType, $eventType)
     {
-        //return parent::processEntityAction($entity, $entityType, $eventType);
+        if(!Mage::getStoreConfig('system/index_queue/enabled')) {
+            return parent::processEntityAction($entity, $entityType, $eventType);
+        }
 
         /** @var Lilmuckers_Queue_Helper_Data $lilqueueHelper */
         $lilqueueHelper = Mage::helper('lilqueue');
@@ -25,5 +27,10 @@ class Webgriffe_IndexQueue_Model_Indexer extends Mage_Index_Model_Indexer
         );
         $indexQueue->addTask($indexTask);
         return $this;
+    }
+
+    public function processEntityActionByWorker(Varien_Object $entity, $entityType, $eventType)
+    {
+        return parent::processEntityAction($entity, $entityType, $eventType);
     }
 }
