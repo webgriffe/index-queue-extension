@@ -38,6 +38,18 @@
             </index_queue>
         </system>
     </default>
+    <queues>
+        <indexQueue>
+            <label>Index Queue</label>
+            <class>wg_indexqueue/queueHandler</class>
+            <workers>
+                <indexTask>
+                    <class>wg_indexqueue/indexWorker</class>
+                    <method>run</method>
+                </indexTask>
+            </workers>
+        </indexQueue>
+    </queues>
     <phpunit>
         <suite>
             <modules>
