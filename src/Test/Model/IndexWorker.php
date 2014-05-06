@@ -8,7 +8,7 @@ class Webgriffe_IndexQueue_Test_Model_IndexWorker extends EcomDev_PHPUnit_Test_C
     public function testRunShouldIndexEntityAndMarkTaskAsSuccessful()
     {
         $entityData = array('my' => 'data');
-        $entity = new Varien_Object($entityData);
+        $entity = new Webgriffe_IndexQueue_Model_EntityObject($entityData);
         $entityType = 'dummy-entity';
         $eventType = 'dummy-event';
         $taskData = array(
@@ -16,8 +16,9 @@ class Webgriffe_IndexQueue_Test_Model_IndexWorker extends EcomDev_PHPUnit_Test_C
             'entityType' => $entityType,
             'eventType' => $eventType,
             'allowTableChanges' => true,
-            'isObjectNew' => false, // TODO test?
+            'isObjectNew' => false,
         );
+        $entity->setIsNew($taskData['isObjectNew']);
 
         $indexerMock = $this->getMock('Webgriffe_IndexQueue_Model_Indexer');
         $indexerMock

@@ -12,7 +12,8 @@ class Webgriffe_IndexQueue_Model_IndexWorker extends Lilmuckers_Queue_Model_Work
 
         $taskData = $task->getData();
 
-        $entity = new Varien_Object($taskData['entity']);
+        $entity = new Webgriffe_IndexQueue_Model_EntityObject($taskData['entity']);
+        $entity->setIsNew($taskData['isObjectNew']);
         $entityType = $taskData['entityType'];
         $eventType = $taskData['eventType'];
 
