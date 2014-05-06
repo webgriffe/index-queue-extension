@@ -39,7 +39,7 @@ class Webgriffe_IndexQueue_Test_Model_Indexer extends EcomDev_PHPUnit_Test_Case
         $lilqueueMock
             ->expects($this->once())
             ->method('getQueue')
-            ->with('indexQueue')
+            ->with(Webgriffe_IndexQueue_Model_Indexer::QUEUE_NAME)
             ->will($this->returnValue($queueMock));
 
         $entity = new Varien_Object(array('my' => 'data'));
