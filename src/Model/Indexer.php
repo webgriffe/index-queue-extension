@@ -6,6 +6,7 @@
 class Webgriffe_IndexQueue_Model_Indexer extends Mage_Index_Model_Indexer
 {
     const QUEUE_NAME = 'indexQueue';
+    const TASK_NAME = 'indexTask';
 
     public function processEntityAction(Varien_Object $entity, $entityType, $eventType)
     {
@@ -18,7 +19,7 @@ class Webgriffe_IndexQueue_Model_Indexer extends Mage_Index_Model_Indexer
         /** @var Lilmuckers_Queue_Model_Queue_Abstract $indexQueue */
         $indexQueue = $lilqueueHelper->getQueue(self::QUEUE_NAME);
         $indexTask = $lilqueueHelper->createTask(
-            'indexTask',
+            self::TASK_NAME,
             array(
                 'entity' => $entity->getData(),
                 'entityType' => $entityType,

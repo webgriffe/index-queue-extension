@@ -51,7 +51,7 @@ class Webgriffe_IndexQueue_Test_Model_Indexer extends EcomDev_PHPUnit_Test_Case
             ->expects($this->once())
             ->method('createTask')
             ->with(
-                'indexTask',
+                Webgriffe_IndexQueue_Model_Indexer::TASK_NAME,
                 array(
                     'entity' => $entity->getData(),
                     'entityType' => $entityType,
