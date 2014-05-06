@@ -41,7 +41,7 @@
     <queues>
         <indexQueue>
             <label>Index Queue</label>
-            <class>wg_indexqueue/queueHandler</class>
+            <class>lilqueue/queue</class>
             <workers>
                 <indexTask>
                     <class>wg_indexqueue/indexWorker</class>

@@ -25,7 +25,7 @@ class Webgriffe_IndexQueue_Test_Config_General extends EcomDev_PHPUnit_Test_Case
         $queueName = Webgriffe_IndexQueue_Model_Indexer::QUEUE_NAME;
         $taskName = Webgriffe_IndexQueue_Model_Indexer::TASK_NAME;
         $this->assertConfigNodeValue('queues/' . $queueName . '/label', 'Index Queue');
-        $this->assertConfigNodeValue('queues/' . $queueName . '/class', 'wg_indexqueue/queueHandler');
+        $this->assertConfigNodeValue('queues/' . $queueName . '/class', 'lilqueue/queue');
         $this->assertConfigNodeValue(
             'queues/' . $queueName . '/workers/' . $taskName . '/class',
             'wg_indexqueue/indexWorker'
