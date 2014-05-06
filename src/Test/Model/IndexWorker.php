@@ -7,6 +7,26 @@ class Webgriffe_IndexQueue_Test_Model_IndexWorker extends EcomDev_PHPUnit_Test_C
 {
     public function testRunShouldIndexEntityAndMarkTaskAsSuccessful()
     {
+        $taskMock = $this->getTaskMock(false);
+
+        $indexWorker = new Webgriffe_IndexQueue_Model_IndexWorker();
+        $indexWorker->run($taskMock);
+    }
+
+    public function testRunShouldHoldTaskIfThereIsAnError()
+    {
+        $taskMock = $this->getTaskMock(true);
+
+        $indexWorker = new Webgriffe_IndexQueue_Model_IndexWorker();
+        $indexWorker->run($taskMock);
+    }
+
+    /**
+     * @param $shouldIndexerThrowException
+     * @return PHPUnit_Framework_MockObject_MockObject
+     */
+    private function getTaskMock($shouldIndexerThrowException)
+    {
         $entityData = array('my' => 'data');
         $entity = new Webgriffe_IndexQueue_Model_EntityObject($entityData);
         $entityType = 'dummy-entity';
@@ -21,11 +41,17 @@ class Webgriffe_IndexQueue_Test_Model_IndexWorker extends EcomDev_PHPUnit_Test_C
         $entity->setIsNew($taskData['isObjectNew']);
 
         $indexerMock = $this->getMock('Webgriffe_IndexQueue_Model_Indexer');
-        $indexerMock
+        $indexerMockInvocation = $indexerMock
             ->expects($this->once())
             ->method('processEntityActionByWorker')
-            ->with($entity, $entityType, $eventType)
-            ->will($this->returnSelf());
+            ->with($entity, $entityType, $eventType);
+
+        if ($shouldIndexerThrowException) {
+            $indexerMockInvocation->will($this->throwException(new RuntimeException('Some error occurred')));
+        } else {
+            $indexerMockInvocation->will($this->returnSelf());
+        }
+
         $indexerMock
             ->expects($this->once())
             ->method('allowTableChanges')
@@ -38,10 +64,11 @@ class Webgriffe_IndexQueue_Test_Model_IndexWorker extends EcomDev_PHPUnit_Test_C
             ->method('getData')
             ->will($this->returnValue($taskData));
         $taskMock
-            ->expects($this->once())
+            ->expects($shouldIndexerThrowException ? $this->never() : $this->once())
             ->method('success');
-
-        $indexWorker = new Webgriffe_IndexQueue_Model_IndexWorker();
-        $indexWorker->run($taskMock);
+        $taskMock
+            ->expects($shouldIndexerThrowException ? $this->once() : $this->never())
+            ->method('hold');
+        return $taskMock;
     }
 } 

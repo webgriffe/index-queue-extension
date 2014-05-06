@@ -7,23 +7,28 @@ class Webgriffe_IndexQueue_Model_IndexWorker extends Lilmuckers_Queue_Model_Work
 {
     public function run(Lilmuckers_Queue_Model_Queue_Task $task)
     {
-        /** @var Webgriffe_IndexQueue_Model_Indexer $indexer */
-        $indexer = Mage::getModel('index/indexer');
+        try {
+            /** @var Webgriffe_IndexQueue_Model_Indexer $indexer */
+            $indexer = Mage::getModel('index/indexer');
 
-        $taskData = $task->getData();
+            $taskData = $task->getData();
 
-        $entity = new Webgriffe_IndexQueue_Model_EntityObject($taskData['entity']);
-        $entity->setIsNew($taskData['isObjectNew']);
-        $entityType = $taskData['entityType'];
-        $eventType = $taskData['eventType'];
+            $entity = new Webgriffe_IndexQueue_Model_EntityObject($taskData['entity']);
+            $entity->setIsNew($taskData['isObjectNew']);
+            $entityType = $taskData['entityType'];
+            $eventType = $taskData['eventType'];
 
-        if ($taskData['allowTableChanges']) {
-            $indexer->allowTableChanges();
-        } else {
-            $indexer->disallowTableChanges();
+            if ($taskData['allowTableChanges']) {
+                $indexer->allowTableChanges();
+            } else {
+                $indexer->disallowTableChanges();
+            }
+
+            $indexer->processEntityActionByWorker($entity, $entityType, $eventType);
+            $task->success();
+        } catch (Exception $e) {
+            Mage::log('Index Worker exception: ' . $e->getMessage(), null, 'wg_indexqueue.log');
+            $task->hold();
         }
-
-        $indexer->processEntityActionByWorker($entity, $entityType, $eventType);
-        $task->success();
     }
 }
