@@ -22,12 +22,12 @@ install:
   - bash < <(curl -s https://raw.github.com/colinmollenhour/modman/master/modman-installer)
   - php n98-magerun.phar  install --installationFolder=${magento_dir} --dbHost=${db_host} --dbUser=${db_user} --dbPass=${db_pass} --dbName=${db_name} --installSampleData=${install_sample_data} --useDefaultConfigParams=yes --magentoVersionByName=${MAGENTO_VERSION} --baseUrl=${base_url}
   - composer install
-  - cd ./${magento_dir}/shell && php ecomdev-phpunit.php --action install && cd ../
-  - cd ./${magento_dir}/shell && php ecomdev-phpunit.php --action change-status && cd ../
-  - cd ./${magento_dir}/shell && php ecomdev-phpunit.php --action magento-config --db-name ${db_name}_test --base-url ${base_url} && cd ../
+  - cd ${magento_dir}/shell && php ecomdev-phpunit.php --action install && cd ${CURRENT_DIR}
+  - cd ${magento_dir}/shell && php ecomdev-phpunit.php --action change-status && cd ${CURRENT_DIR}
+  - cd ${magento_dir}/shell && php ecomdev-phpunit.php --action magento-config --db-name ${db_name}_test --base-url ${base_url} && cd ${CURRENT_DIR}
   - modman init magento
   - modman link ${CURRENT_DIR}
 
 script:
-  - cd ./${magento_dir}
+  - cd ${magento_dir}
   - phpunit --filter ${phpunit_filter}
