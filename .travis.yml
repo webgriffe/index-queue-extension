@@ -1,6 +1,5 @@
 language: php
 php:
-  - "5.5"
   - "5.4"
 env:
   global:
@@ -17,16 +16,17 @@ env:
     - MAGENTO_VERSION=magento-ce-1.7.0.2
     - MAGENTO_VERSION=magento-ce-1.6.2.0
 install:
-  - CURRENT_DIR=$(pwd)
+  - cd ${TRAVIS_BUILD_DIR}
   - wget https://raw.github.com/netz98/n98-magerun/master/n98-magerun.phar
   - php n98-magerun.phar  install --installationFolder=${magento_dir} --dbHost=${db_host} --dbUser=${db_user} --dbPass=${db_pass} --dbName=${db_name} --installSampleData=${install_sample_data} --useDefaultConfigParams=yes --magentoVersionByName=${MAGENTO_VERSION} --baseUrl=${base_url}
   - composer install
-  - cd ${magento_dir}/shell && php ecomdev-phpunit.php --action install && cd ${CURRENT_DIR}
-  - cd ${magento_dir}/shell && php ecomdev-phpunit.php --action change-status && cd ${CURRENT_DIR}
-  - cd ${magento_dir}/shell && php ecomdev-phpunit.php --action magento-config --db-name ${db_name}_test --base-url ${base_url} && cd ${CURRENT_DIR}
-  - wget https://raw.githubusercontent.com/colinmollenhour/modman/master/modman
-  - sh modman init magento
-  - sh modman link ${CURRENT_DIR}
+  - cd ${magento_dir}/shell && php ecomdev-phpunit.php --action install && cd ${TRAVIS_BUILD_DIR}
+  - cd ${magento_dir}/shell && php ecomdev-phpunit.php --action change-status && cd ${TRAVIS_BUILD_DIR}
+  - cd ${magento_dir}/shell && php ecomdev-phpunit.php --action magento-config --db-name ${db_name}_test --base-url ${base_url} && cd ${TRAVIS_BUILD_DIR}
+  - wget https://raw.githubusercontent.com/colinmollenhour/modman/master/modman -O modman.sh
+  - chmod a+x ${TRAVIS_BUILD_DIR}/modman.sh
+  - ${TRAVIS_BUILD_DIR}/modman.sh init magento
+  - ${TRAVIS_BUILD_DIR}/modman.sh link ${TRAVIS_BUILD_DIR}
 
 script:
   - cd ${magento_dir}
