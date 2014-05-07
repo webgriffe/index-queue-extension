@@ -17,7 +17,6 @@ env:
     - MAGENTO_VERSION=magento-ce-1.7.0.2
     - MAGENTO_VERSION=magento-ce-1.6.2.0
 install:
-  - BASEDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
   - curl -o n98-magerun.phar https://raw.github.com/netz98/n98-magerun/master/n98-magerun.phar
   - chmod +x ./n98-magerun.phar
   - bash < <(curl -s https://raw.github.com/colinmollenhour/modman/master/modman-installer)
@@ -27,6 +26,7 @@ install:
   - cd ./${magento_dir}/shell && php ecomdev-phpunit.php --action change-status && cd ../
   - cd ./${magento_dir}/shell && php ecomdev-phpunit.php --action magento-config --db-name ${db_name}_test --base-url ${base_url} && cd ../
   - modman init magento
+  - BASEDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
   - modman link ${BASEDIR}
 
 script:
