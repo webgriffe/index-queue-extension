@@ -1,6 +1,6 @@
 language: php
 php:
-  - "5.4"
+  - "5.3"
 env:
   global:
     - magento_dir=magento
@@ -13,8 +13,8 @@ env:
     - phpunit_filter=Webgriffe_IndexQueue
   matrix:
     - MAGENTO_VERSION=magento-ce-1.8.1.0
-    - MAGENTO_VERSION=magento-ce-1.7.0.2
-    - MAGENTO_VERSION=magento-ce-1.6.2.0
+#    - MAGENTO_VERSION=magento-ce-1.7.0.2
+#    - MAGENTO_VERSION=magento-ce-1.6.2.0
 install:
   - cd ${TRAVIS_BUILD_DIR}
   - wget https://raw.github.com/netz98/n98-magerun/master/n98-magerun.phar
@@ -30,4 +30,5 @@ install:
 
 script:
   - cd ${magento_dir}
+  - phpunit --version
   - phpunit --filter ${phpunit_filter}
