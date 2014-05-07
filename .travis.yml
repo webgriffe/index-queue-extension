@@ -1,0 +1,34 @@
+language: php
+php:
+  - "5.5"
+  - "5.4"
+env:
+  global:
+    - magento_dir=magento
+    - db_host=127.0.0.1
+    - db_user=root
+    - db_pass=
+    - db_name=index-queue-extension
+    - install_sample_data=no
+    - base_url=http://index-queue-extension.mage.dev/
+    - phpunit_filter=Webgriffe_IndexQueue
+  matrix:
+    - MAGENTO_VERSION=magento-ce-1.8.1.0
+    - MAGENTO_VERSION=magento-ce-1.7.0.2
+    - MAGENTO_VERSION=magento-ce-1.6.2.0
+install:
+  - BASEDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+  - curl -o n98-magerun.phar https://raw.github.com/netz98/n98-magerun/master/n98-magerun.phar
+  - chmod +x ./n98-magerun.phar
+  - bash < <(curl -s https://raw.github.com/colinmollenhour/modman/master/modman-installer)
+  - ./n98-magerun.phar  install --installationFolder=${magento_dir} --dbHost=${db_host} --dbUser=${db_user} --dbPass=${db_pass} --dbName=${db_name} --installSampleData=${install_sample_data} --useDefaultConfigParams=yes --magentoVersionByName=${MAGENTO_VERSION} --baseUrl=${base_url}
+  - composer install
+  - cd ./${magento_dir}/shell && php ecomdev-phpunit.php --action install && cd ../
+  - cd ./${magento_dir}/shell && php ecomdev-phpunit.php --action change-status && cd ../
+  - cd ./${magento_dir}/shell && php ecomdev-phpunit.php --action magento-config --db-name ${db_name}_test --base-url ${base_url} && cd ../
+  - modman init magento
+  - modman link ${BASEDIR}
+
+script:
+  - cd ./${magento_dir}
+  - phpunit --filter ${phpunit_filter}
