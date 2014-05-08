@@ -3,3 +3,4 @@
 /.modman/
 /vendor/
 /composer.lock
+/params.sh

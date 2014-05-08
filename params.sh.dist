@@ -1,0 +1,9 @@
+#!/bin/sh
+
+db_host=127.0.0.1
+db_user=root
+db_pass=
+db_name=index-queue-extension
+base_url=http://index-queue-extension.mage.dev/
+db_test_name=${db_name}_test
+install_sample_data=no
