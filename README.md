@@ -1,6 +1,8 @@
 Webgriffe IndexQueue Magento Extension
 ======================================
 
+[![Build Status](https://travis-ci.org/webgriffe/index-queue-extension.svg?branch=master)](https://travis-ci.org/webgriffe/index-queue-extension)
+
 This Magento extension queues indexing operations with a queue manager backend. It's based on Lilmuckers_Queue extension
 (https://github.com/lilmuckers/magento-lilmuckers_queue).
 
