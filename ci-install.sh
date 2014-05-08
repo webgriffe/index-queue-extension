@@ -10,6 +10,8 @@ mysql -uroot --password="${db_pass}" -e "CREATE DATABASE \`${db_test_name}\`"
 cd ${magento_dir}/shell && php ecomdev-phpunit.php --action install && cd ${TRAVIS_BUILD_DIR}
 cd ${magento_dir}/shell && php ecomdev-phpunit.php --action change-status && cd ${TRAVIS_BUILD_DIR}
 cd ${magento_dir}/shell && php ecomdev-phpunit.php --action magento-config --db-name ${db_test_name} --base-url ${base_url} && cd ${TRAVIS_BUILD_DIR}
+cd ${magento_dir} && ${TRAVIS_BUILD_DIR}/vendor/bin/phpunit --filter EcomDev_PHPUnit
+cd ${TRAVIS_BUILD_DIR}
 wget https://raw.githubusercontent.com/colinmollenhour/modman/master/modman -O modman.sh
 chmod a+x ${TRAVIS_BUILD_DIR}/modman.sh
 ${TRAVIS_BUILD_DIR}/modman.sh init magento
