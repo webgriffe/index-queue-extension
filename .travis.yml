@@ -8,6 +8,7 @@ env:
     - db_user=root
     - db_pass=
     - db_name=index-queue-extension
+    - db_test_name=${db_name}_test
     - install_sample_data=no
     - base_url=http://index-queue-extension.mage.dev/
     - phpunit_filter=Webgriffe_IndexQueue
@@ -20,10 +21,10 @@ install:
   - wget https://raw.github.com/netz98/n98-magerun/master/n98-magerun.phar
   - php n98-magerun.phar  install --installationFolder=${magento_dir} --dbHost=${db_host} --dbUser=${db_user} --dbPass=${db_pass} --dbName=${db_name} --installSampleData=${install_sample_data} --useDefaultConfigParams=yes --magentoVersionByName=${MAGENTO_VERSION} --baseUrl=${base_url}
   - composer install
-  - mysql -uroot -e "CREATE DATABASE `${db_name}_test`"
+  - mysql -uroot -e "CREATE DATABASE \`${db_test_name}\`"
   - cd ${magento_dir}/shell && php ecomdev-phpunit.php --action install && cd ${TRAVIS_BUILD_DIR}
   - cd ${magento_dir}/shell && php ecomdev-phpunit.php --action change-status && cd ${TRAVIS_BUILD_DIR}
-  - cd ${magento_dir}/shell && php ecomdev-phpunit.php --action magento-config --db-name ${db_name}_test --base-url ${base_url} && cd ${TRAVIS_BUILD_DIR}
+  - cd ${magento_dir}/shell && php ecomdev-phpunit.php --action magento-config --db-name ${db_test_name}_test --base-url ${base_url} && cd ${TRAVIS_BUILD_DIR}
   - wget https://raw.githubusercontent.com/colinmollenhour/modman/master/modman -O modman.sh
   - chmod a+x ${TRAVIS_BUILD_DIR}/modman.sh
   - ${TRAVIS_BUILD_DIR}/modman.sh init magento
