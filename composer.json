@@ -24,7 +24,8 @@
         "lilmuckers/magento-lilmuckers_queue": "dev-master"
     },
     "require-dev": {
-        "ivanchepurnyi/ecomdev_phpunit": "dev-dev"
+        "ivanchepurnyi/ecomdev_phpunit": "dev-dev",
+        "phpunit/phpunit": "3.*"
     },
     "extra": {
         "magento-root-dir": "magento"
