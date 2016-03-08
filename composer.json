@@ -1,5 +1,5 @@
 {
-    "name": "webgriffe/image-queue-extension",
+    "name": "webgriffe/index-queue-extension",
     "type": "magento-module",
     "license":"OSL-3.0",
     "description":"Magento extension that queues indexing operations.",
