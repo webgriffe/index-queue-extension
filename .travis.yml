@@ -13,4 +13,4 @@ install:
   - git submodule update
 
 script:
-  - sh ci-test.sh
+  - bash travis.ci.sh
