@@ -1,0 +1,3 @@
+[submodule "magento-bash-ci"]
+	path = magento-bash-ci
+	url = https://github.com/mmenozzi/magento-bash-ci.git
