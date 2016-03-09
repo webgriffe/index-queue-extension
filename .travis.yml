@@ -1,23 +1,16 @@
 language: php
 php:
-  - "5.3"
+  - "5.4"
+  - "5.5"
 env:
-  global:
-    - magento_dir=magento
-    - db_host=127.0.0.1
-    - db_user=root
-    - db_pass=
-    - db_name=index-queue-extension
-    - db_test_name=${db_name}_test
-    - install_sample_data=no
-    - base_url=http://index-queue-extension.mage.dev/
-    - phpunit_filter=Webgriffe_IndexQueue
   matrix:
+    - MAGENTO_VERSION=magento-mirror-1.9.2.2
     - MAGENTO_VERSION=magento-ce-1.8.1.0
-#    - MAGENTO_VERSION=magento-ce-1.7.0.2
+    - MAGENTO_VERSION=magento-ce-1.7.0.2
 #    - MAGENTO_VERSION=magento-ce-1.6.2.0
 install:
-  - sh ci-install.sh
+  - git submodule init
+  - git submodule update
 
 script:
   - sh ci-test.sh

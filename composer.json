@@ -20,12 +20,11 @@
         }
     ],
     "require": {
-        "magento-hackathon/magento-composer-installer": "*",
         "lilmuckers/magento-lilmuckers_queue": "dev-master"
     },
     "require-dev": {
-        "ivanchepurnyi/ecomdev_phpunit": "dev-dev",
-        "phpunit/phpunit": "3.*"
+        "phpunit/phpunit": "*",
+        "ecomdev/ecomdev_phpunit": "*"
     },
     "extra": {
         "magento-root-dir": "magento"
