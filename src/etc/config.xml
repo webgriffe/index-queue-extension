@@ -34,7 +34,7 @@
     <default>
         <system>
             <index_queue>
-                <enabled>1</enabled>
+                <enabled>0</enabled>
             </index_queue>
         </system>
     </default>

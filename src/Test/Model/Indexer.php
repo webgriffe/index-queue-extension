@@ -31,6 +31,32 @@ class Webgriffe_IndexQueue_Test_Model_Indexer extends EcomDev_PHPUnit_Test_Case
         $this->assertTrue(method_exists(new Webgriffe_IndexQueue_Model_Indexer(), 'processEntityAction'));
     }
 
+    public function testThatProcessEntityActionDoesNotQueueIndexingWhenDisabledWhichIsTheDefault()
+    {
+        $lilqueueMock = $this->getMock('Lilmuckers_Queue_Helper_Data');
+        $lilqueueMock
+            ->expects($this->never())
+            ->method('getQueue');
+
+        $entity = new Varien_Object(array('my' => 'data'));
+        $entityType = 'dummy-entity';
+        $eventType = Mage_Index_Model_Event::TYPE_SAVE;
+
+        $indexEventMock = $this->getMock('Mage_Index_Model_Event', array('setDataObject'));
+        $indexEventMock
+            ->expects($this->once())
+            ->method('setDataObject')
+            ->with($entity)
+            ->will($this->returnSelf());
+        $this->replaceByMock('model', 'index/event', $indexEventMock);
+
+        $indexer = new Webgriffe_IndexQueue_Model_Indexer();
+        $indexer->processEntityAction($entity, $entityType, $eventType);
+    }
+
+    /**
+     * @loadFixture indexQueueEnabled.yaml
+     */
     public function testThatProcessEntityActionQueuesIndexing()
     {
         $queueMock = $this->getMock('Lilmuckers_Queue_Model_Queue_Abstract');
@@ -74,31 +100,8 @@ class Webgriffe_IndexQueue_Test_Model_Indexer extends EcomDev_PHPUnit_Test_Case
     }
 
     /**
-     * @loadFixture indexQueueDisabled.yaml
+     * @loadFixture indexQueueEnabled.yaml
      */
-    public function testThatProcessEntityActionDoesNotQueueIndexingWhenDisabled()
-    {
-        $lilqueueMock = $this->getMock('Lilmuckers_Queue_Helper_Data');
-        $lilqueueMock
-            ->expects($this->never())
-            ->method('getQueue');
-
-        $entity = new Varien_Object(array('my' => 'data'));
-        $entityType = 'dummy-entity';
-        $eventType = Mage_Index_Model_Event::TYPE_SAVE;
-
-        $indexEventMock = $this->getMock('Mage_Index_Model_Event', array('setDataObject'));
-        $indexEventMock
-            ->expects($this->once())
-            ->method('setDataObject')
-            ->with($entity)
-            ->will($this->returnSelf());
-        $this->replaceByMock('model', 'index/event', $indexEventMock);
-
-        $indexer = new Webgriffe_IndexQueue_Model_Indexer();
-        $indexer->processEntityAction($entity, $entityType, $eventType);
-    }
-
     public function testThatProcessEntityActionByWorkerDoesNotQueueIndexing()
     {
         $lilqueueMock = $this->getMock('Lilmuckers_Queue_Helper_Data');

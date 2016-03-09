@@ -10,7 +10,7 @@ class Webgriffe_IndexQueue_Model_Indexer extends Mage_Index_Model_Indexer
 
     public function processEntityAction(Varien_Object $entity, $entityType, $eventType)
     {
-        if(!Mage::getStoreConfig('system/index_queue/enabled')) {
+        if(!Mage::getStoreConfigFlag('system/index_queue/enabled')) {
             return parent::processEntityAction($entity, $entityType, $eventType);
         }
 
