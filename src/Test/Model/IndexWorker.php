@@ -28,18 +28,19 @@ class Webgriffe_IndexQueue_Test_Model_IndexWorker extends EcomDev_PHPUnit_Test_C
     private function getTaskMock($shouldIndexerThrowException)
     {
         $entityData = array('my' => 'data');
-        $entity = new Webgriffe_IndexQueue_Model_EntityObject($entityData);
         $entityType = 'dummy-entity';
         $eventType = 'dummy-event';
         $taskData = array(
-            'entity' => $entityData,
+            'entityClass' => 'Varien_Object',
+            'entityData' => $entityData,
+            'entityOrigData' => null,
             'entityType' => $entityType,
             'eventType' => $eventType,
             'allowTableChanges' => true,
-            'isObjectNew' => false,
         );
-        $entity->setIsNew($taskData['isObjectNew']);
 
+        $entity = new Varien_Object();
+        $entity->setData($entityData);
         $indexerMock = $this->getMock('Webgriffe_IndexQueue_Model_Indexer');
         $indexerMockInvocation = $indexerMock
             ->expects($this->once())
