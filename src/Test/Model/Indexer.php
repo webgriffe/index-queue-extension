@@ -42,14 +42,6 @@ class Webgriffe_IndexQueue_Test_Model_Indexer extends EcomDev_PHPUnit_Test_Case
         $entityType = 'dummy-entity';
         $eventType = Mage_Index_Model_Event::TYPE_SAVE;
 
-        $indexEventMock = $this->getMock('Mage_Index_Model_Event', array('setDataObject'));
-        $indexEventMock
-            ->expects($this->once())
-            ->method('setDataObject')
-            ->with($entity)
-            ->will($this->returnSelf());
-        $this->replaceByMock('model', 'index/event', $indexEventMock);
-
         $indexer = new Webgriffe_IndexQueue_Model_Indexer();
         $indexer->processEntityAction($entity, $entityType, $eventType);
     }
@@ -79,11 +71,12 @@ class Webgriffe_IndexQueue_Test_Model_Indexer extends EcomDev_PHPUnit_Test_Case
             ->with(
                 Webgriffe_IndexQueue_Model_Indexer::TASK_NAME,
                 array(
-                    'entity' => $entity->getData(),
+                    'entityClass' => 'Varien_Object',
+                    'entityData' => $entity->getData(),
+                    'entityOrigData' => null,
                     'entityType' => $entityType,
                     'eventType' => $eventType,
                     'allowTableChanges' => true,
-                    'isObjectNew' => false,
                 )
             )
             ->will($this->returnValue($taskMock));
