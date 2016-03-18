@@ -21,11 +21,12 @@ class Webgriffe_IndexQueue_Model_Indexer extends Mage_Index_Model_Indexer
         $indexTask = $lilqueueHelper->createTask(
             self::TASK_NAME,
             array(
-                'entity' => $entity->getData(),
+                'entityClass' => get_class($entity),
+                'entityData' => $entity->getData(),
+                'entityOrigData' => $entity->getOrigData(),
                 'entityType' => $entityType,
                 'eventType' => $eventType,
                 'allowTableChanges' => $this->_allowTableChanges,
-                'isObjectNew' => method_exists ($entity, 'isObjectNew') ? $entity->isObjectNew() : false,
             )
         );
         $indexQueue->addTask($indexTask);

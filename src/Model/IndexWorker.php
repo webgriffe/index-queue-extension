@@ -12,9 +12,24 @@ class Webgriffe_IndexQueue_Model_IndexWorker extends Lilmuckers_Queue_Model_Work
             $indexer = Mage::getModel('index/indexer');
 
             $taskData = $task->getData();
+            $entityClass = $taskData['entityClass'];
+            $entityData = $taskData['entityData'];
+            $entityOrigData = $taskData['entityOrigData'];
 
-            $entity = new Webgriffe_IndexQueue_Model_EntityObject($taskData['entity']);
-            $entity->setIsNew($taskData['isObjectNew']);
+            /** @var Varien_Object $entity */
+            $entity = new $entityClass($entityData);
+            if ($entity->getId() && method_exists($entity, 'load')) {
+                $id = $entity->getId();
+                $entity = new $entityClass();
+                $entity->load($id);
+            } else {
+                $entity->setData($entityData);
+            }
+            if ($entityOrigData && is_array($entityOrigData)) {
+                foreach ($entityOrigData as $key => $data) {
+                    $entity->setOrigData($key, $data);
+                }
+            }
             $entityType = $taskData['entityType'];
             $eventType = $taskData['eventType'];
 
