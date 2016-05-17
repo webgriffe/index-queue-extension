@@ -10,7 +10,7 @@ class Webgriffe_IndexQueue_Model_Indexer extends Mage_Index_Model_Indexer
 
     public function processEntityAction(Varien_Object $entity, $entityType, $eventType)
     {
-        if(!Mage::getStoreConfigFlag('system/index_queue/enabled')) {
+        if (!Mage::getStoreConfigFlag('system/index_queue/enabled')) {
             return parent::processEntityAction($entity, $entityType, $eventType);
         }
 
@@ -29,12 +29,31 @@ class Webgriffe_IndexQueue_Model_Indexer extends Mage_Index_Model_Indexer
                 'allowTableChanges' => $this->_allowTableChanges,
             )
         );
+
+        if ($entity->getId()) {
+            $this->log('Queuing reindex for entity ' . get_class($entity) . ' with id ' . $entity->getId());
+        } else {
+            $this->log('Queuing reindex for entity ' . get_class($entity) . ' without id');
+        }
+
         $indexQueue->addTask($indexTask);
+
+        $this->log('Queuing done');
+
         return $this;
     }
 
     public function processEntityActionByWorker(Varien_Object $entity, $entityType, $eventType)
     {
         return parent::processEntityAction($entity, $entityType, $eventType);
+    }
+
+    /**
+     * @param string $message
+     * @param int $level
+     */
+    protected function log($message, $level = Zend_Log::DEBUG)
+    {
+        Mage::helper('wg_indexqueue')->log($message, $level);
     }
 }

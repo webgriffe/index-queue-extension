@@ -39,11 +39,29 @@ class Webgriffe_IndexQueue_Model_IndexWorker extends Lilmuckers_Queue_Model_Work
                 $indexer->disallowTableChanges();
             }
 
+            if ($entity->getId()) {
+                $this->log('Starting reindex for object '.get_class($entity).' with id '.$entity->getId());
+            } else {
+                $this->log('Starting reindex for object '.get_class($entity).' without id');
+            }
+
             $indexer->processEntityActionByWorker($entity, $entityType, $eventType);
+
+            $this->log('Done');
+
             $task->success();
         } catch (Exception $e) {
-            Mage::log('Index Worker exception: ' . $e->getMessage(), null, 'wg_indexqueue.log');
+            $this->log('Index Worker exception: ' . $e->getMessage(), Zend_Log::CRIT);
             $task->hold();
         }
+    }
+
+    /**
+     * @param string $message
+     * @param int $level
+     */
+    protected function log($message, $level = Zend_Log::DEBUG)
+    {
+        Mage::helper('wg_indexqueue')->log($message, $level);
     }
 }
