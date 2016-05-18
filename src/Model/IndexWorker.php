@@ -53,7 +53,9 @@ class Webgriffe_IndexQueue_Model_IndexWorker extends Lilmuckers_Queue_Model_Work
         } catch (Exception $e) {
             $this->log('Index Worker exception: ' . $e->getMessage(), Zend_Log::CRIT);
             $this->log($e->getTraceAsString(), Zend_Log::CRIT);
-            $task->hold();
+
+            //Rethrow the exception to allow Lilmuckers_Queue_Model_Queue_Task to properly handle it
+            throw $e;
         }
     }
 
