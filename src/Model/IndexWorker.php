@@ -47,11 +47,12 @@ class Webgriffe_IndexQueue_Model_IndexWorker extends Lilmuckers_Queue_Model_Work
 
             $indexer->processEntityActionByWorker($entity, $entityType, $eventType);
 
-            $this->log('Done');
+            $this->log('Indexing Done');
 
             $task->success();
         } catch (Exception $e) {
             $this->log('Index Worker exception: ' . $e->getMessage(), Zend_Log::CRIT);
+            $this->log($e->getTraceAsString(), Zend_Log::CRIT);
             $task->hold();
         }
     }
