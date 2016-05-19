@@ -30,6 +30,26 @@
                 <class>Webgriffe_IndexQueue_Helper</class>
             </wg_indexqueue>
         </helpers>
+        <events>
+            <lilmuckers_queue_close_db_connection_after>
+                <observers>
+                    <wg_indexqueue>
+                        <type>singleton</type>
+                        <class>wg_indexqueue/observer</class>
+                        <method>closeDbConnection</method>
+                    </wg_indexqueue>
+                </observers>
+            </lilmuckers_queue_close_db_connection_after>
+            <lilmuckers_queue_reopen_db_connection_after>
+                <observers>
+                    <wg_indexqueue>
+                        <type>singleton</type>
+                        <class>wg_indexqueue/observer</class>
+                        <method>reopenDbConnection</method>
+                    </wg_indexqueue>
+                </observers>
+            </lilmuckers_queue_reopen_db_connection_after>
+        </events>
     </global>
     <default>
         <system>
