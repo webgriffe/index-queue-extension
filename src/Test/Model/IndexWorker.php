@@ -17,7 +17,7 @@ class Webgriffe_IndexQueue_Test_Model_IndexWorker extends EcomDev_PHPUnit_Test_C
     {
         $taskMock = $this->getTaskMock(true);
 
-        $this->setExpectedException(RuntimeException::class);
+        $this->setExpectedException('RuntimeException');
 
         $indexWorker = new Webgriffe_IndexQueue_Model_IndexWorker();
         $indexWorker->run($taskMock);
