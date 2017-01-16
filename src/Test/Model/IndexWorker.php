@@ -17,6 +17,8 @@ class Webgriffe_IndexQueue_Test_Model_IndexWorker extends EcomDev_PHPUnit_Test_C
     {
         $taskMock = $this->getTaskMock(true);
 
+        $this->setExpectedException(RuntimeException::class);
+
         $indexWorker = new Webgriffe_IndexQueue_Model_IndexWorker();
         $indexWorker->run($taskMock);
     }
@@ -68,8 +70,8 @@ class Webgriffe_IndexQueue_Test_Model_IndexWorker extends EcomDev_PHPUnit_Test_C
             ->expects($shouldIndexerThrowException ? $this->never() : $this->once())
             ->method('success');
         $taskMock
-            ->expects($shouldIndexerThrowException ? $this->once() : $this->never())
+            ->expects($this->never())
             ->method('hold');
         return $taskMock;
     }
-} 
+}
