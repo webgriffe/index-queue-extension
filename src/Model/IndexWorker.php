@@ -46,7 +46,7 @@ class Webgriffe_IndexQueue_Model_IndexWorker extends Lilmuckers_Queue_Model_Work
                     'affected_product_ids',
                 );
 
-                $entity->addData(array_intersect_key($entityData, $keysToRestore));
+                $entity->addData(array_intersect_key($entityData, array_combine($keysToRestore, $keysToRestore)));
             }
 
             if ($entityOrigData && is_array($entityOrigData)) {
