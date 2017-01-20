@@ -22,16 +22,32 @@ class Webgriffe_IndexQueue_Model_IndexWorker extends Lilmuckers_Queue_Model_Work
                 $id = $entity->getId();
                 $entity = new $entityClass();
                 $entity->load($id);
+            } else {
+                //Is this needed? This data was already passed to the constructor earlier...
+                $entity->setData($entityData);
             }
 
-            //In some cases, such as when changing the positions for some products in a category, there may be one
-            //or more _data values that are not set by a load() call. Specifically for a category there are the
-            //posted_products, is_changed_product_list, products_position, affected_product_ids items and more.
-            //If these values are missing, some reindex operations may not be ferformed, such as updating the
-            //catalog_category_product index when changing product positions.
-            //To solve this, re-set the value of the _data field to restore everything before proceeding with the
-            //reindex.
-            $entity->setData($entityData);
+            if ($entity instanceof Mage_Catalog_Model_Category) {
+                //In some cases, such as when changing the positions for some products in a category, there may be
+                //one or more _data values that are not set by a load() call. Specifically for a category there are
+                //the posted_products, is_changed_product_list, products_position, affected_product_ids items and
+                //more. If these values are missing, some reindex operations may not be ferformed, such as updating
+                //the catalog_category_product index when changing product positions.
+                //To solve this, re-set the missing values before proceeding with the reindex.
+                $keysToRestore = array(
+                    'id',
+                    'default_sort_by',
+                    'posted_products',
+                    'path_ids',
+                    'custom_design_from_is_formated',
+                    'custom_design_to_is_formated',
+                    'is_changed_product_list',
+                    'products_position',
+                    'affected_product_ids',
+                );
+
+                $entity->addData(array_intersect_key($entityData, $keysToRestore));
+            }
 
             if ($entityOrigData && is_array($entityOrigData)) {
                 foreach ($entityOrigData as $key => $data) {
