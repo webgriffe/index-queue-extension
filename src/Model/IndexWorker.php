@@ -22,11 +22,14 @@ class Webgriffe_IndexQueue_Model_IndexWorker extends Lilmuckers_Queue_Model_Work
                 $id = $entity->getId();
                 $entity = new $entityClass();
                 $entity->load($id);
+
+
             } else {
                 //Is this needed? This data was already passed to the constructor earlier...
                 $entity->setData($entityData);
             }
 
+            $keysToRestore = array();
             if ($entity instanceof Mage_Catalog_Model_Category) {
                 //In some cases, such as when changing the positions for some products in a category, there may be
                 //one or more _data values that are not set by a load() call. Specifically for a category there are
@@ -45,7 +48,17 @@ class Webgriffe_IndexQueue_Model_IndexWorker extends Lilmuckers_Queue_Model_Work
                     'products_position',
                     'affected_product_ids',
                 );
+            } elseif ($entity instanceof Mage_Catalog_Model_Product) {
+                //Trigger the price reindex for new products
+                $keysToRestore = array(
+                    'is_relations_changed',
+                    'is_custom_option_changed',
+                    'is_changed_websites',
+                    'force_reindex_required',
+                );
+            }
 
+            if (count($keysToRestore) > 0) {
                 $entity->addData(array_intersect_key($entityData, array_combine($keysToRestore, $keysToRestore)));
             }
 
